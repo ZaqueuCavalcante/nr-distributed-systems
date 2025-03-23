@@ -17,9 +17,12 @@
         </MudStack>
     </MudForm>
 
-    <MudAlert Icon="@Icons.Material.Filled.CloudDone" Class="my-4" Severity="Severity.Success">
-        <MudText>Arquivo enviado com sucesso!</MudText>
-    </MudAlert>
+    @if(_success)
+    {
+        <MudAlert Icon="@Icons.Material.Filled.CloudDone" Class="my-4" Severity="Severity.Success">
+            <MudText>Arquivo enviado com sucesso!</MudText>
+        </MudAlert>
+    }
 </MudContainer>
 
 @inject HttpClient Client
@@ -27,7 +30,6 @@
 @code
 {
     private MudForm _form;
-    private bool _loading;
     private bool _success;
 
     private async Task UploadFile(IBrowserFile file)
@@ -40,5 +42,7 @@
         var content = new MultipartFormDataContent();
         content.Add(new StreamContent(memoryStream), "file", file.Name);
         await Client.PostAsync("/files", content);
+
+        _success = true;
     }
 }
