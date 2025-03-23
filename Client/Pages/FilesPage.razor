@@ -1,0 +1,44 @@
+﻿@using System.Net.Http.Headers
+
+@page "/files"
+
+<PageTitle>Files</PageTitle>
+
+<MudContainer Class="my-4 px-4">
+    <MudForm @ref="@_form">
+        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.Center">
+            <MudFileUpload T="IBrowserFile" FilesChanged="UploadFile">
+                <ActivatorContent>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.CloudUpload">
+                        Upload File
+                    </MudButton>
+                </ActivatorContent>
+            </MudFileUpload>
+        </MudStack>
+    </MudForm>
+
+    <MudAlert Icon="@Icons.Material.Filled.CloudDone" Class="my-4" Severity="Severity.Success">
+        <MudText>Arquivo enviado com sucesso!</MudText>
+    </MudAlert>
+</MudContainer>
+
+@inject HttpClient Client
+
+@code
+{
+    private MudForm _form;
+    private bool _loading;
+    private bool _success;
+
+    private async Task UploadFile(IBrowserFile file)
+    {
+        var data = file.OpenReadStream(file.Size);
+        var memoryStream = new MemoryStream();
+        await data.CopyToAsync(memoryStream);
+        memoryStream.Seek(0, SeekOrigin.Begin);
+
+        var content = new MultipartFormDataContent();
+        content.Add(new StreamContent(memoryStream), "file", file.Name);
+        await Client.PostAsync("/files", content);
+    }
+}
