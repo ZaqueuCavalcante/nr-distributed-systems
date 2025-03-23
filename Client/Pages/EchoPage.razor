@@ -52,6 +52,8 @@
         await _form.Validate();
         if (!_form.IsValid) return;
 
+        if (string.IsNullOrWhiteSpace(_message)) return;
+
         var response = await Client.PostAsJsonAsync("/echo", new EchoIn { Message = _message });
         var message = await response.DeserializeTo<EchoOut>();
         _messages.Add(message.Message);

@@ -1,0 +1,29 @@
+services:
+  server:
+    container_name: server
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    environment:
+      - 'ASPNETCORE_URLS=http://+:5000'
+      - 'ASPNETCORE_ENVIRONMENT=Development'
+    ports:
+      - '5000:5000'
+    networks:
+      - nrnet
+
+  client:
+    container_name: client
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    depends_on:
+      - server
+    ports:
+      - '5001:80'
+    networks:
+      - nrnet
+
+networks:
+  nrnet:
+    driver: bridge

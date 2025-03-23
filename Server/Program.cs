@@ -1,9 +1,12 @@
 using Serilog;
+using Server.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, config) => 
     config.ReadFrom.Configuration(context.Configuration)
 );
+
+builder.Services.AddSignalR();
 
 builder.Services.AddOpenApi();
 
@@ -22,7 +25,6 @@ builder.Services.AddCors(options => options
 var app = builder.Build();
 
 app.MapOpenApi();
-app.UseHttpsRedirection();
 
 app.UseCors();
 app.UseRouting();
@@ -30,5 +32,7 @@ app.UseEndpoints(options =>
 {
     options.MapControllers();
 });
+
+app.MapHub<ChatHub>("/chat-hub");
 
 app.Run();

@@ -1,0 +1,94 @@
+﻿@using Microsoft.AspNetCore.SignalR.Client
+
+@page "/chat"
+
+<PageTitle>Chat</PageTitle>
+
+<MudContainer Class="my-4 px-4">
+    <MudAlert Icon="@Icons.Material.Filled.Person" Class="mb-4" Severity="Severity.Success">
+        <MudText><b>Olá, user_@_user</b></MudText>
+    </MudAlert>
+
+    <MudCard Outlined="true" Elevation="0" Class="my-2" Style="height: 100%">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText>Mensagens</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            @foreach (var msg in _messages)
+            {
+                @if(msg.User.Equals(_user))
+                {
+                    <MudAlert ContentAlignment="HorizontalAlignment.End" Dense Severity="Severity.Success" NoIcon Class="mb-2">
+                        <MudText><b>user_@msg.User:</b> @msg.Message</MudText>
+                    </MudAlert>
+                }
+                else
+                {
+                    <MudAlert Dense Severity="Severity.Info" NoIcon Class="mb-2">
+                        <MudText><b>user_@msg.User:</b> @msg.Message</MudText>
+                    </MudAlert>
+                }
+            }
+        </MudCardContent>
+    </MudCard>
+
+    <MudForm @ref="@_form">
+        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.Center">
+                <MudItem xs="12" sm="10" md="10" lg="10">
+                    <MudTextField
+                        OnlyValidateIfDirty="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        AutoFocus="true"
+                        @bind-Value="@_message"
+                        T="String"
+                        Label="Mensagem"
+                    />
+                </MudItem>
+                <MudItem xs="12" sm="2" md="2" lg="2">
+                    <MudButton Size="Size.Medium" Variant="Variant.Filled" Color="Color.Success" OnClick="@Send">Enviar</MudButton>
+                </MudItem>
+        </MudStack>
+    </MudForm>
+
+</MudContainer>
+
+@inject HttpClient Client
+@inject IConfiguration Configuration
+
+@code
+{
+    private MudForm _form;
+    private string _user = Guid.NewGuid().ToString().OnlyNumbers().Substring(0, 3);
+    private string _message;
+    private List<ChatMessage> _messages = [];
+    private HubConnection _hubConnection;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var apiUrl = Configuration.GetSection("ApiUrl").Value!;
+
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl($"{apiUrl}/chat-hub")
+            .Build();
+
+        _hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+        {
+            _messages.Add(new ChatMessage { User = user, Message = message });
+            StateHasChanged();
+        });
+
+        await _hubConnection.StartAsync();
+    }
+
+    protected async Task Send()
+    {
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        await _hubConnection.SendAsync("SendMessage", _user, _message);
+        _message = "";
+    }
+}
