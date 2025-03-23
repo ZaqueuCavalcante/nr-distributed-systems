@@ -29,5 +29,12 @@ GitHub não exibe vídeos acima de 10Mb -> https://github.com/ZaqueuCavalcante/n
 ### 3 - Transferência de Arquivos Simples
 Um cliente envia um arquivo de texto para o servidor, que o salva localmente.
 
+GitHub não exibe vídeos acima de 10Mb -> https://github.com/ZaqueuCavalcante/nr-distributed-systems/raw/refs/heads/master/Videos/03_03_files.mp4
+
+<p align="center">
+  <video src="./Videos/03_03_files.mp4" height="600" style="display: block; margin: 0 auto" />
+</p>
+
+
 ### 4 - Servidor de Hora
 Crie um servidor que retorna a data e hora atuais quando um cliente se conecta.
