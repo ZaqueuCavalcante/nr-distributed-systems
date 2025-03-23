@@ -7,6 +7,8 @@ Com base no que vimos sobre sockets, desenvolvam as aplicações abaixo, se sint
 ### 1 - Echo Server e Cliente
 Crie um servidor que recebe mensagens de um cliente e retorna a mesma mensagem (eco).
 
+GitHub não permite vídeos acima de 10Mb -> https://github.com/ZaqueuCavalcante/nr-distributed-systems/raw/refs/heads/master/Videos/03_01_echo.mp4
+
 <p align="center">
   <video src="./Videos/03_01_echo.mp4" height="600" style="display: block; margin: 0 auto" />
 </p>
