@@ -1,0 +1,18 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudSnackbarProvider />
+<MudDialogProvider CloseOnEscapeKey="true" CloseButton="true" />
+
+<MudLayout>
+    <MudAppBar Elevation="0" Dense="true" ToolBarClass="pl-1 pr-1">
+        <HomeButton />
+    </MudAppBar>
+    <MudDrawer Open=true ClipMode="DrawerClipMode.Always" Elevation="2" Width="160px">
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent Class="pb-12">
+        @Body
+    </MudMainContent>
+</MudLayout>
