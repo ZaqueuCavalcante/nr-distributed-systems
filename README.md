@@ -35,6 +35,11 @@ GitHub não exibe vídeos acima de 10Mb -> https://github.com/ZaqueuCavalcante/n
   <video src="./Videos/03_03_files.mp4" height="600" style="display: block; margin: 0 auto" />
 </p>
 
-
 ### 4 - Servidor de Hora
 Crie um servidor que retorna a data e hora atuais quando um cliente se conecta.
+
+GitHub não exibe vídeos acima de 10Mb -> https://github.com/ZaqueuCavalcante/nr-distributed-systems/raw/refs/heads/master/Videos/03_04_now.mp4
+
+<p align="center">
+  <video src="./Videos/03_04_now.mp4" height="600" style="display: block; margin: 0 auto" />
+</p>

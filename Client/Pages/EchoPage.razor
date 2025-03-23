@@ -22,21 +22,21 @@
         </MudStack>
     </MudForm>
 
-<MudCard Outlined="true" Elevation="0" Class="mt-2" Style="height: 100%">
-	<MudCardHeader>
-		<CardHeaderContent>
-			<MudText>Mensagens</MudText>
-		</CardHeaderContent>
-	</MudCardHeader>
-    <MudCardContent>
-        @foreach (var msg in _messages)
-        {
-            <MudAlert Dense Severity="Severity.Success" Class="mb-2">
-                <MudText>@msg</MudText>
-            </MudAlert>
-        }
-    </MudCardContent>
-</MudCard>
+    <MudCard Outlined="true" Elevation="0" Class="mt-2" Style="height: 100%">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText>Mensagens</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            @foreach (var msg in _messages)
+            {
+                <MudAlert Dense Severity="Severity.Success" Class="mb-2">
+                    <MudText>@msg</MudText>
+                </MudAlert>
+            }
+        </MudCardContent>
+    </MudCard>
 </MudContainer>
 
 @inject HttpClient Client

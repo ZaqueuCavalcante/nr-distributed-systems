@@ -1,0 +1,36 @@
+﻿@page "/now"
+
+<PageTitle>Now</PageTitle>
+
+<MudContainer Class="my-4 px-4">
+    <MudForm @ref="@_form">
+        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.Center">
+            <MudItem xs="12" sm="10" md="10" lg="10">
+                <MudAlert Icon="@Icons.Material.Filled.Person" Severity="Severity.Success">
+                    <MudText><b>AGORA: </b> @_now</MudText>
+                </MudAlert>
+            </MudItem>
+            <MudItem xs="12" sm="2" md="2" lg="2">
+                <MudButton Size="Size.Medium" Variant="Variant.Filled" Color="Color.Success" OnClick="@Update">Atualizar</MudButton>
+            </MudItem>
+        </MudStack>
+    </MudForm>
+</MudContainer>
+
+@inject HttpClient Client
+
+@code
+{
+    private MudForm _form;
+    private string _now;
+
+    protected async Task Update()
+    {
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+
+        var response = await Client.GetFromJsonAsync<NowOut>("/now");
+        _now = response.Now;
+    }
+}
