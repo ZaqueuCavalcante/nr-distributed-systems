@@ -1,0 +1,61 @@
+﻿@page "/decrypt"
+
+<PageTitle>Decrypt</PageTitle>
+
+<MudContainer Class="my-4 px-4">
+    <MudForm @ref="@_form">
+        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.Center">
+                <MudItem xs="12" sm="10" md="10" lg="10">
+                    <MudTextField
+                        OnlyValidateIfDirty="true"
+                        Variant="Variant.Outlined"
+                        AutoFocus="true"
+                        @bind-Value="@_message"
+                        T="String"
+                        Label="Mensagem encriptada"
+                    />
+                </MudItem>
+                <MudItem xs="12" sm="2" md="2" lg="2">
+                    <MudButton Size="Size.Medium" Variant="Variant.Filled" Color="Color.Success" OnClick="@Send">Decriptar</MudButton>
+                </MudItem>
+        </MudStack>
+    </MudForm>
+
+    <MudCard Outlined="true" Elevation="0" Class="mt-2" Style="height: 100%">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText>Mensagens</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            @foreach (var msg in _messages)
+            {
+                <MudAlert Dense Severity="Severity.Success" Class="mb-2">
+                    <MudText>@msg.Encrypted ➡️ @msg.Message</MudText>
+                </MudAlert>
+            }
+        </MudCardContent>
+    </MudCard>
+</MudContainer>
+
+@inject HttpClient Client
+
+@code
+{
+    private MudForm _form;
+    private string _message;
+    private List<DecryptOut> _messages = [];
+
+    protected async Task Send()
+    {
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        if (string.IsNullOrWhiteSpace(_message)) return;
+
+        var response = await Client.PostAsJsonAsync("/decrypt", new DecryptIn { Encrypted = _message });
+        var message = await response.DeserializeTo<DecryptOut>();
+        _messages.Add(message);
+        _message = "";
+    }
+}

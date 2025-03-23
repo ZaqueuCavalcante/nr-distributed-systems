@@ -43,3 +43,28 @@ GitHub não exibe vídeos acima de 10Mb -> https://github.com/ZaqueuCavalcante/n
 <p align="center">
   <video src="./Videos/03_04_now.mp4" height="600" style="display: block; margin: 0 auto" />
 </p>
+
+---------------------------------------------------------------------------------------------------
+
+## Atividade 04
+
+Com base no que vimos sobre sockets, desenvolvam as aplicações abaixo, se sintam livres de usar a tecnologia que preferir, caso não seja uma das que estamos trabalhando em sala, será necessário explicação do funcionamento na linguagem escolhida
+
+### 1 - Jogo da Forca
+Faça um servidor que cria um jogo da forca e um cliente que tentará descobrir a palavra.
+
+Conceitualmente é a mesma ideia da atividade "Echo Server e Cliente".
+
+### 2 - Jogo Simples (Jogo da Velha)
+Implemente um jogo da velha onde dois clientes jogam remotamente através de um servidor.
+
+Conceitualmente é a mesma ideia da atividade "Chat Simples entre Dois Usuários".
+
+### 3 - Chat de criptografia
+Desenvolva um programa onde o cliente irá enviar mensagens criptografadas e o servidor receberá a mensagem e irá descriptografar. Como criptografia podem utilizar a cifra de césar com qualquer chave. No servidor é necessário mostrar a mensagem criptografada e descriptografada.
+
+GitHub não exibe vídeos acima de 10Mb -> https://github.com/ZaqueuCavalcante/nr-distributed-systems/raw/refs/heads/master/Videos/04_03_decrypt.mp4
+
+<p align="center">
+  <video src="./Videos/04_03_decrypt.mp4" height="600" style="display: block; margin: 0 auto" />
+</p>
